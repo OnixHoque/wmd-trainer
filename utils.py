@@ -9,7 +9,7 @@ def read_csv(input_file):
     return df
 
 def get_train_config():
-    with open('train.config') as f:
+    with open('./config/train.config') as f:
         config = eval(f.read())
 
     emb_dim = config["emb_dim"]
@@ -21,7 +21,7 @@ def get_train_config():
     return emb_dim, lr, n_epochs, b_size, margin
 
 def get_neo4j_config():
-    with open('neo4j.config') as f:
+    with open('./config/neo4j.config') as f:
         config = eval(f.read())
 
     uri = config['uri']
