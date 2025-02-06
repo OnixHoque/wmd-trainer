@@ -8,12 +8,12 @@ from torchkge.utils import DataLoader
 # Load dataset mappings
 def load_mappings(filepath):
     with open(filepath, 'rb') as f:
-        ent2ix, rel2ix = pickle.load(f)
-    return ent2ix, rel2ix
+        ent2ix, rel2ix, emb_dim = pickle.load(f)
+    return ent2ix, rel2ix, emb_dim
 
 # Load model
 def load_model(model_path, ent_size, rel_size, emb_dim=100):
-    model = TransE(ent_size, rel_size, emb_dim, norm=1, dissimilarity_type='L2')
+    model = TransE(emb_dim, ent_size, rel_size, dissimilarity_type='L2')
     model.load_state_dict(torch.load(model_path))
     model.eval()
     return model
@@ -52,8 +52,8 @@ if __name__ == "__main__":
     parser.add_argument("--output", type=str, required=True, help="Output TSV file")
     args = parser.parse_args()
     
-    ent2ix, rel2ix = load_mappings(args.dataset)
-    model = load_model(args.model, len(ent2ix), len(rel2ix))
+    ent2ix, rel2ix, emb_dim = load_mappings(args.dataset)
+    model = load_model(args.model, len(ent2ix), len(rel2ix), emb_dim)
     results = infer(model, ent2ix, rel2ix, args.head, args.tail, args.rel, args.num)
     
     # Save results

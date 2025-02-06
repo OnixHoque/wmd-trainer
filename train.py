@@ -73,4 +73,4 @@ model.normalize_parameters()
 torch.save(model.state_dict(), "model_params.pt")
 import pickle
 with open('dataset_params.pt', 'wb') as f:
-    pickle.dump([kg.ent2ix, kg.rel2ix], 'dataset_params.pt')
+    pickle.dump([kg.ent2ix, kg.rel2ix, emb_dim], 'dataset_params.pt')
