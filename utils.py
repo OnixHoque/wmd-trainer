@@ -1,6 +1,16 @@
 # pip install neo4j
 from neo4j import GraphDatabase
 import pandas as pd
+import requests
+from io import StringIO
+
+def retrieve_from_url(tsv_url):
+    print('Downloading file...', end='')
+    response = requests.get(tsv_url)
+    response.raise_for_status()  # Ensure we got a valid response
+    df = pd.read_csv(StringIO(response.text), low_memory=False, sep='\t', header=None, names=['from', 'rel', 'to'])
+    print('Done\n')
+    return df
 
 def read_csv(input_file):
     print('Reading file...', end='')
