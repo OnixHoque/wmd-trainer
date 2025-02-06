@@ -4,17 +4,25 @@ import pandas as pd
 import requests
 from io import StringIO
 
+read_tsv = lambda x: pd.read_csv(x, low_memory=False, sep='\t', header=None, names=['from', 'rel', 'to'])
+
+def retrieve_from_url(filename):
+    print('Reading file...', end='')
+    df = read_tsv(filename)
+    print('Done\n')
+    return df
+
 def retrieve_from_url(tsv_url):
     print('Downloading file...', end='')
     response = requests.get(tsv_url)
     response.raise_for_status()  # Ensure we got a valid response
-    df = pd.read_csv(StringIO(response.text), low_memory=False, sep='\t', header=None, names=['from', 'rel', 'to'])
+    df = read_tsv(StringIO(response.text))
     print('Done\n')
     return df
 
 def read_csv(input_file):
     print('Reading file...', end='')
-    df = pd.read_csv(input_file, low_memory=False, sep='\t', header=None, names=['from', 'rel', 'to'])
+    df = read_tsv(input_file)
     print('Done\n')
     return df
 

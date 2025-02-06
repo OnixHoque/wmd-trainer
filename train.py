@@ -81,8 +81,9 @@ import argparse
 
 # Parse command-line arguments
 parser = argparse.ArgumentParser(description="Load data from Neo4j or a remote TSV file.")
-parser.add_argument("--input_type", choices=["neo4j", "remote"], required=True, help="Specify the input type: 'neo4j' or 'remote'")
+parser.add_argument("--input_type", choices=["neo4j", "remote", "local"], required=True, help="Specify the input type: 'neo4j' or 'remote'")
 parser.add_argument("--url", type=str, help="URL of the remote TSV file (required if input_type is 'remote')")
+parser.add_argument("--filename", type=str, help="Filename of the TSV file (required if input_type is 'local')")
 
 args = parser.parse_args()
 
@@ -94,8 +95,17 @@ elif args.input_type == "remote":
     if not args.url:
         raise ValueError("A URL must be provided when input_type is 'remote'.")
     df2 = retrieve_from_url(args.url)
+elif args.input_type == "local":
+    if not args.filename:
+        raise ValueError("A filename must be provided when input_type is 'local'.")
+    df2 = retrieve_from_url(args.url)
 
 print(df2)
 
 trained_model = perform_training(df2)
 save_model(trained_model)
+
+
+# python script.py --input_type neo4j
+# python script.py --input_type remote --url https://gist.githubusercontent.com/example/sample.tsv
+# python script.py --input_type local --filename fb15k-100.txt
