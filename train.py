@@ -80,8 +80,8 @@ import argparse
 # import pandas as pd
 
 # Parse command-line arguments
-parser = argparse.ArgumentParser(description="Load data from Neo4j or a remote TSV file.")
-parser.add_argument("--input_type", choices=["neo4j", "remote", "local"], required=True, help="Specify the input type: 'neo4j' or 'remote'")
+parser = argparse.ArgumentParser(description="Load data from Neo4j or a local/remote TSV file.")
+parser.add_argument("--input_type", choices=["neo4j", "remote", "local"], required=True, help="Specify the input type: 'neo4j', 'local', or 'remote'")
 parser.add_argument("--url", type=str, help="URL of the remote TSV file (required if input_type is 'remote')")
 parser.add_argument("--filename", type=str, help="Filename of the TSV file (required if input_type is 'local')")
 
