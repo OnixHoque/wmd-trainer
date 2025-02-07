@@ -60,15 +60,15 @@ Run the script with the appropriate input type and parameters.
 
 #### Load Data from Neo4j
 
-    python script.py --input_type neo4j
+    python train.py --input_type neo4j
 
 #### Load Data from a Remote TSV File
 
-    python script.py --input_type remote --url "https://example.com/data.tsv"
+    python train.py --input_type remote --url "https://example.com/data.tsv"
 
 #### Load Data from a Local TSV File
 
-    python script.py --input_type local --filename "./data.tsv"
+    python train.py --input_type local --filename "./data.tsv"
 
 ## Model Inference Script
 
