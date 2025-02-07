@@ -71,7 +71,7 @@ if __name__ == "__main__":
     results = infer(model, ent2ix, rel2ix, args.head, args.tail, args.rel, args.num, args.input_type)
         
     with open(args.output, 'w') as f:
-        f.write("Head\tRelation\tTail\tScore\n")
+        f.write("from\trel\tto\tscore\n")
         for h, r, t, s in results:
             f.write(f"{h}\t{r}\t{t}\t{s}\n")
     

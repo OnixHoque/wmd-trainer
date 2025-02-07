@@ -62,13 +62,21 @@ def perform_training(df2):
                                                 running_loss / len(dataloader)))
 
     model.normalize_parameters()
+    torch.save(model.state_dict(), "trained_model.pth")
+    
+    import pickle
+    with open('dataset_mappings.bin', 'wb') as f:
+        pickle.dump([kg.ent2ix, kg.rel2ix, emb_dim], f)
+    
+    catalog = {'Entities': kg.ent2idx, 'Relations': kg.rel2ix}
+    import json
+    with open("catalog.json", "w") as json_file:
+        json.dump(catalog, json_file, indent=4)
+        
     return model
 
-def save_model(model):
-    torch.save(model.state_dict(), "model_params.pt")
-    import pickle
-    with open('dataset_params.pt', 'wb') as f:
-        pickle.dump([kg.ent2ix, kg.rel2ix, emb_dim], 'dataset_params.pt')
+# def save_model(model):
+    
 
 
 
@@ -103,7 +111,6 @@ elif args.input_type == "local":
 print(df2)
 
 trained_model = perform_training(df2)
-save_model(trained_model)
 
 
 # python script.py --input_type neo4j
